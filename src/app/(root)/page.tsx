@@ -9,7 +9,8 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center">
       {session ? (
         <div className="flex flex-col items-center gap-2">
-          You're logged in as {session.user.name}
+          You're logged in as {session.user.name} <br />
+          Your role is: {session.user.role}
           <LogoutBtn />
         </div>
       ) : (

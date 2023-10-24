@@ -14,23 +14,9 @@ model Course {
   name        String
   credits     Int
   grade       String?
-  student     Student @relation(fields: [studentMail], references: [email], onDelete: Cascade)
+  student     User    @relation(fields: [studentMail], references: [email], onDelete: Cascade)
 
   @@index([studentMail])
-}
-
-model Student {
-  email   String   @id
-  name    String   @db.Text
-  image   String?
-  courses Course[]
-}
-
-model Professor {
-  email     String  @id
-  name      String  @db.Text
-  image     String?
-  forCourse String
 }
 
 model Account {
@@ -62,13 +48,20 @@ model Session {
   @@index([userId])
 }
 
+enum Role {
+  STUDENT
+  PROFESSOR
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  role          String?
+  role          Role
+  courses       Course[]
+  forCourses    String?
   accounts      Account[]
   sessions      Session[]
 }

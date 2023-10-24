@@ -1,6 +1,13 @@
 "use client";
 
 import { Button } from "./ui/Button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/components/ui/Accordion";
+import ProfAuth from "./ProfAuth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { FC, useState } from "react";
@@ -49,12 +56,14 @@ const AuthChoose: FC<AuthChooseProps> = ({ className, ...props }) => {
         {isLoading ? null : <Icons.google className="mr-2 h-4 w-4" />}
         Continue as a student
       </Button>
-      <Link
-        href="/prof_sign_in"
-        className="text-md text-secondary-foreground hover:underline"
-      >
-        Are you a professor?
-      </Link>
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Are you a professor?</AccordionTrigger>
+          <AccordionContent>
+            <ProfAuth />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 };

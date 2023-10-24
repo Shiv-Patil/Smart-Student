@@ -14,7 +14,7 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center gap-2">
-      <p className="text-5xl">{greeting}</p>
+      <p className="text-5xl animate-fade-in">{greeting}</p>
       <p className="text-xs text-secondary-foreground">
         use the naviagtion buttons to proceed.
       </p>

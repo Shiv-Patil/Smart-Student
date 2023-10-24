@@ -9,6 +9,8 @@ import { Toaster } from "~/components/ui/Toaster";
 import { getServerAuthSession } from "~/server/auth";
 import { permanentRedirect } from "next/navigation";
 
+import Navbar from "~/components/(shared)/Navbar";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -44,7 +46,12 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider headers={headersList}>{children}</TRPCReactProvider>
+        <TRPCReactProvider headers={headersList}>
+          <main className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center px-4">
+            <Navbar />
+            {children}
+          </main>
+        </TRPCReactProvider>
         <Toaster />
       </body>
     </html>

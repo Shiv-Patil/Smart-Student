@@ -1,12 +1,11 @@
 import { type Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import tw_animate from "tailwindcss-animate";
 
-export default {
+export default withUt({
   darkMode: ["class"],
-  content: [
-    './src/**/*.{ts,tsx}',
-	], 
+  content: ["./src/**/*.{ts,tsx}"],
   theme: {
     container: {
       center: true,
@@ -68,13 +67,17 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.4s ease-out",
       },
     },
   },
   plugins: [tw_animate],
-} satisfies Config;
-
+}) satisfies Config;

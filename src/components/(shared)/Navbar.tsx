@@ -3,12 +3,13 @@ import { Role } from "@prisma/client";
 import StudentNav from "~/components/(student)/Nav";
 import ProfNav from "~/components/(professor)/Nav";
 import ThemeToggle from "./ThemeToggle";
-import LogoutBtn from "../LogoutBtn";
+import { Avatar, AvatarImage, AvatarFallback } from "../ui/Avatar";
+import Link from "next/link";
 
 const Navbar = async () => {
   const session = await getServerAuthSession();
   return (
-    <div className="flex items-center justify-between absolute left-0 top-0 right-0">
+    <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
       <div className="flex flex-1 items-center">
         <ThemeToggle />
       </div>
@@ -20,7 +21,14 @@ const Navbar = async () => {
         <ProfNav />
       )}
       <div className="flex flex-1 items-center justify-end">
-        {session ? <LogoutBtn /> : null}
+        {session ? (
+          <Link href="/profile">
+            <Avatar>
+              <AvatarImage src={session.user.image || ""} />
+              <AvatarFallback>?</AvatarFallback>
+            </Avatar>
+          </Link>
+        ) : null}
       </div>
     </div>
   );

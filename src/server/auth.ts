@@ -52,7 +52,6 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     session: ({ session, user }) => {
-      console.log("getting session");
       return {
         ...session,
         user: {

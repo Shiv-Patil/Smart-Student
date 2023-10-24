@@ -9,13 +9,34 @@ import {
 } from "~/components/ui/Accordion";
 import ProfAuth from "./ProfAuth";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icons } from "~/components/Icons";
 import { useToast } from "~/hooks/use-toast";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
+  const params = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const error = params.get("error");
+    if (error && error === "AccessDenied") {
+      toast({
+        title: "Error",
+        description: "Invalid professor email",
+        variant: "destructive",
+      });
+      router.replace("/");
+    } else if (params.get("verifyRequest") === "") {
+      toast({
+        title: "Success",
+        description: "Sign in link sent to your email id.",
+      });
+      router.replace("/");
+    }
+  }, [params]);
 
   const loginWithGoogle = async () => {
     setIsLoading(true);
@@ -35,7 +56,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex flex-1 w-[24rem] flex-col items-center justify-center gap-4">
+    <div className="flex w-[24rem] flex-1 flex-col items-center justify-center gap-4">
       <h2 className="mb-4 text-4xl">Welcome.</h2>
       <Button
         size="lg"

@@ -41,7 +41,6 @@ const ProfAuth = () => {
     try {
       await signIn("email", { email: data.email });
     } catch (error) {
-      // toast
       toast({
         title: "There was a problem",
         description: "An error occured while logging you in",

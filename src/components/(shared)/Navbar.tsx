@@ -5,6 +5,7 @@ import ProfNav from "~/components/(professor)/Nav";
 import ThemeToggle from "./ThemeToggle";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/Avatar";
 import Link from "next/link";
+import { User2 } from "lucide-react";
 
 const Navbar = async () => {
   const session = await getServerAuthSession();
@@ -23,9 +24,9 @@ const Navbar = async () => {
       <div className="flex flex-1 items-center justify-end">
         {session ? (
           <Link href="/profile">
-            <Avatar>
+            <Avatar className="border border-input">
               <AvatarImage src={session.user.image || ""} />
-              <AvatarFallback>?</AvatarFallback>
+              <AvatarFallback><User2 className="h-4 w-4" /></AvatarFallback>
             </Avatar>
           </Link>
         ) : null}

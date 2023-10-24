@@ -46,13 +46,13 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`font-sans ${inter.variable}`}>
+        <Toaster />
         <TRPCReactProvider headers={headersList}>
           <main className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center px-4">
             <Navbar />
             {children}
           </main>
-        </TRPCReactProvider>
-        <Toaster />
+        </TRPCReactProvider> 
       </body>
     </html>
   );

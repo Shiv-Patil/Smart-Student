@@ -1,11 +1,13 @@
-import { Edit2 } from "lucide-react";
+import { User2 } from "lucide-react";
 import EditAvatar from "~/components/(shared)/EditAvatar";
+import LogoutBtn from "~/components/LogoutBtn";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/Avatar";
 import { Badge } from "~/components/ui/Badge";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "~/components/ui/Card";
@@ -26,8 +28,10 @@ const Profile = async () => {
             <div className="flex flex-1 flex-col items-end max-md:items-center">
               <Avatar className="relative h-48 w-48 max-md:h-36 max-md:w-36">
                 <AvatarImage src={session?.user.image || ""} />
-                <AvatarFallback>?</AvatarFallback>
-                <EditAvatar className="hover:opacity-50 absolute bottom-0 left-0 right-0 top-0 rounded-full bg-background opacity-0 transition-opacity" />
+                <AvatarFallback>
+                  <User2 className="h-12 w-12" />
+                </AvatarFallback>
+                <EditAvatar className="absolute bottom-0 left-0 right-0 top-0 rounded-full bg-black opacity-0 transition-opacity hover:opacity-50" />
               </Avatar>
             </div>
             <div className="flex flex-1 flex-col items-start justify-center gap-2 max-md:items-center">
@@ -41,6 +45,10 @@ const Profile = async () => {
             </div>
           </div>
         </CardContent>
+        <CardFooter className="items-center justify-between text-xs text-secondary-foreground">
+          Max avatar upload size: 1MB
+          <LogoutBtn />
+        </CardFooter>
       </Card>
     </>
   );

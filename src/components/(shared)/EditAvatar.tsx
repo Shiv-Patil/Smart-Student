@@ -60,6 +60,7 @@ const EditAvatar = forwardRef(
       <>
         <input
           id="file"
+          accept="image/png, image/jpg, image/jpeg, image/webp, .png, .jpg, .jpeg, .webp"
           className="hidden"
           type="file"
           onChange={fileSelected}
@@ -75,9 +76,9 @@ const EditAvatar = forwardRef(
           )}
         >
           {isUploading ? (
-            <Loader2 className="h-8 w-8 animate-spin" />
+            <Loader2 className="h-8 w-8 animate-spin text-white" />
           ) : (
-            <Edit2 className="h-8 w-8" />
+            <Edit2 className="h-8 w-8 text-white" />
           )}
         </label>
       </>

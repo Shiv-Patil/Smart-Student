@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "./ui/Button";
+import { Button } from "~/components/ui/Button";
 import {
   Accordion,
   AccordionContent,
@@ -9,15 +9,11 @@ import {
 } from "~/components/ui/Accordion";
 import ProfAuth from "./ProfAuth";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
-import { FC, useState } from "react";
-import { cn } from "~/lib/utils";
-import { Icons } from "./Icons";
+import { useState } from "react";
+import { Icons } from "~/components/Icons";
 import { useToast } from "~/hooks/use-toast";
 
-interface AuthChooseProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const AuthChoose: FC<AuthChooseProps> = ({ className, ...props }) => {
+const Auth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
 
@@ -39,14 +35,8 @@ const AuthChoose: FC<AuthChooseProps> = ({ className, ...props }) => {
   };
 
   return (
-    <div
-      className={cn(
-        "container flex max-w-md flex-col items-center gap-4",
-        className,
-      )}
-      {...props}
-    >
-      <h2 className="mb-6 text-4xl">Welcome.</h2>
+    <div className="flex flex-1 w-[24rem] flex-col items-center justify-center gap-4">
+      <h2 className="mb-4 text-4xl">Welcome.</h2>
       <Button
         size="lg"
         className="w-full"
@@ -59,7 +49,7 @@ const AuthChoose: FC<AuthChooseProps> = ({ className, ...props }) => {
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger>Are you a professor?</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="mt-2">
             <ProfAuth />
           </AccordionContent>
         </AccordionItem>
@@ -68,4 +58,4 @@ const AuthChoose: FC<AuthChooseProps> = ({ className, ...props }) => {
   );
 };
 
-export default AuthChoose;
+export default Auth;

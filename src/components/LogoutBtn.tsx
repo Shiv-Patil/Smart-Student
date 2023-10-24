@@ -25,6 +25,7 @@ const LogoutBtn: FC<LogoutBtnProps> = ({ className }) => {
 
   return (
     <Button
+      variant="outline"
       size="lg"
       className={cn("w-fit", className)}
       onClick={logout}

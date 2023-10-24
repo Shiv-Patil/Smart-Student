@@ -2,7 +2,6 @@
 
 import { Button } from "~/components/ui/Button";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
 import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +10,6 @@ import * as z from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,

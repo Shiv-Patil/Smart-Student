@@ -10,7 +10,7 @@ import EmailProvider from "next-auth/providers/email";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 
-import { Role, Course } from "@prisma/client";
+import { Role } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {

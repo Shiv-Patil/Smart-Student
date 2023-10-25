@@ -15,7 +15,7 @@ const Navbar = async () => {
         <ThemeToggle />
       </div>
       {!session ? (
-        <h3>Login</h3>
+        null
       ) : session.user.role === Role.STUDENT ? (
         !session?.user.image || !session?.user.image.length ? null : (
           <StudentNav />

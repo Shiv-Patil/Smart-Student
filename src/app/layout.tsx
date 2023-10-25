@@ -10,8 +10,8 @@ import { getServerAuthSession } from "~/server/auth";
 import { permanentRedirect } from "next/navigation";
 
 import Navbar from "~/components/(shared)/Navbar";
-import { toast } from "~/hooks/use-toast";
 import { Role } from "@prisma/client";
+import { ServerThemeProvider } from "@wits/next-themes";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -41,22 +41,29 @@ export default async function RootLayout({
   }
 
   const updateAvatarPath = "/profile";
-  if (session && session.user.role === Role.STUDENT && !session.user.image && pathname !== updateAvatarPath) {
+  if (
+    session &&
+    session.user.role === Role.STUDENT &&
+    !session.user.image &&
+    pathname !== updateAvatarPath
+  ) {
     // student should upload avatar
     permanentRedirect(updateAvatarPath);
   }
 
   return (
-    <html lang="en" className="dark">
-      <body className={`font-sans ${inter.variable}`}>
-        <Toaster />
-        <TRPCReactProvider headers={headersList}>
-          <main className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center px-4">
-            <Navbar />
-            {children}
-          </main>
-        </TRPCReactProvider> 
-      </body>
-    </html>
+    <ServerThemeProvider attribute="class">
+      <html lang="en">
+        <body className={`font-sans ${inter.variable}`}>
+          <Toaster />
+          <TRPCReactProvider headers={headersList}>
+            <main className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center px-4">
+              <Navbar />
+              {children}
+            </main>
+          </TRPCReactProvider>
+        </body>
+      </html>
+    </ServerThemeProvider>
   );
 }

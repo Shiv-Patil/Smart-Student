@@ -72,7 +72,7 @@ const EditAvatar = forwardRef(
           className={cn(
             "flex cursor-pointer items-center justify-center",
             props.className,
-            isUploading ? "opacity-50" : "",
+            isUploading ? "opacity-50 cursor-default" : "",
           )}
         >
           {isUploading ? (

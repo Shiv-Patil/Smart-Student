@@ -1,7 +1,7 @@
 import { Role } from "@prisma/client";
 import { User2 } from "lucide-react";
 import EditAvatar from "~/components/(shared)/EditAvatar";
-import LogoutBtn from "~/components/LogoutBtn";
+import LogoutBtn from "~/components/(shared)/LogoutBtn";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/Avatar";
 import { Badge } from "~/components/ui/Badge";
 import {

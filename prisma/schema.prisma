@@ -9,14 +9,14 @@ datasource db {
 }
 
 model Course {
-  id          String  @id @default(cuid())
-  studentMail String
-  name        String
-  credits     Int
-  grade       String?
-  student     User    @relation(fields: [studentMail], references: [email], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  name      String
+  credits   Int
+  grade     String?
+  student   Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String
 
-  @@index([studentMail])
+  @@index([studentId])
 }
 
 model Account {
@@ -53,17 +53,46 @@ enum Role {
   PROFESSOR
 }
 
+model Fee {
+  id        String  @id @default(cuid())
+  studentId String
+  for       String
+  amount    Int // in INR
+  paid      Boolean @default(false)
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+}
+
+model Student {
+  id      String   @id @default(cuid())
+  branch  String?
+  courses Course[]
+  fees    Fee[]
+  User    User?
+}
+
+model Professor {
+  id         String @id @default(cuid())
+  forCourses String
+  User       User?
+}
+
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
+  studentId     String?    @unique
+  professorId   String?    @unique
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   role          Role
-  courses       Course[]
-  forCourses    String?
+  student       Student?   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  professor     Professor? @relation(fields: [professorId], references: [id], onDelete: Cascade)
   accounts      Account[]
   sessions      Session[]
+
+  @@index([studentId, professorId])
 }
 
 model VerificationToken {

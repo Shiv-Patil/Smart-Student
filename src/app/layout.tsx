@@ -11,6 +11,7 @@ import { permanentRedirect } from "next/navigation";
 
 import Navbar from "~/components/(shared)/Navbar";
 import { toast } from "~/hooks/use-toast";
+import { Role } from "@prisma/client";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,7 +41,7 @@ export default async function RootLayout({
   }
 
   const updateAvatarPath = "/profile";
-  if (session && !session.user.image && pathname !== updateAvatarPath) {
+  if (session && session.user.role === Role.STUDENT && !session.user.image && pathname !== updateAvatarPath) {
     // student should upload avatar
     permanentRedirect(updateAvatarPath);
   }

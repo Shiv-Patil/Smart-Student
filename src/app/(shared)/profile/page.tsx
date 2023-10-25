@@ -12,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/Card";
-import { toast } from "~/hooks/use-toast";
 import { getServerAuthSession } from "~/server/auth";
 
 const Profile = async () => {
@@ -47,7 +46,7 @@ const Profile = async () => {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="items-center justify-between text-xs text-secondary-foreground">
+        <CardFooter className="items-end justify-between text-xs text-secondary-foreground">
           Max avatar upload size: 1MB
           <span className="text-red-500">
             {session?.user.role === Role.STUDENT &&

@@ -10,6 +10,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { permanentRedirect } from "next/navigation";
 
 import Navbar from "~/components/(shared)/Navbar";
+import { toast } from "~/hooks/use-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,15 +33,16 @@ export default async function RootLayout({
   const pathname = headersList.get("x-pathname");
 
   const unprotectedRoutes = ["/"];
-
   // redirect user to sign in page if they try to go to any other path without being signed in
   // thus we don't have to add a check to every route
   if (!unprotectedRoutes.find((val) => val === pathname) && !session) {
     permanentRedirect("/");
   }
 
-  if (session && !session.user.image) {
-    // todo: student should upload image
+  const updateAvatarPath = "/profile";
+  if (session && !session.user.image && pathname !== updateAvatarPath) {
+    // student should upload avatar
+    permanentRedirect(updateAvatarPath);
   }
 
   return (

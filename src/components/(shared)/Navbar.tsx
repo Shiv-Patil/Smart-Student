@@ -17,7 +17,9 @@ const Navbar = async () => {
       {!session ? (
         <h3>Login</h3>
       ) : session.user.role === Role.STUDENT ? (
-        <StudentNav />
+        !session?.user.image || !session?.user.image.length ? null : (
+          <StudentNav />
+        )
       ) : (
         <ProfNav />
       )}
@@ -26,7 +28,9 @@ const Navbar = async () => {
           <Link href="/profile">
             <Avatar className="border border-input">
               <AvatarImage src={session.user.image || ""} />
-              <AvatarFallback><User2 className="h-4 w-4" /></AvatarFallback>
+              <AvatarFallback>
+                <User2 className="h-4 w-4" />
+              </AvatarFallback>
             </Avatar>
           </Link>
         ) : null}

@@ -1,3 +1,4 @@
+import { Role } from "@prisma/client";
 import { User2 } from "lucide-react";
 import EditAvatar from "~/components/(shared)/EditAvatar";
 import LogoutBtn from "~/components/LogoutBtn";
@@ -11,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/Card";
+import { toast } from "~/hooks/use-toast";
 import { getServerAuthSession } from "~/server/auth";
 
 const Profile = async () => {
@@ -47,6 +49,12 @@ const Profile = async () => {
         </CardContent>
         <CardFooter className="items-center justify-between text-xs text-secondary-foreground">
           Max avatar upload size: 1MB
+          <span className="text-red-500">
+            {session?.user.role === Role.STUDENT &&
+            (!session?.user.image || !session?.user.image.length)
+              ? "Upload an avatar before continuing."
+              : null}
+          </span>
           <LogoutBtn />
         </CardFooter>
       </Card>

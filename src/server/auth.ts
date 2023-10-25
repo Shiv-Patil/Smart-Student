@@ -42,6 +42,7 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider === "google") {
         // student login (account)
         user.role = Role.STUDENT;
+        user.image = "";
       } else {
         // prof login (email)
         user.role = Role.PROFESSOR;

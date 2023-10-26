@@ -31,12 +31,12 @@ export default async function RootLayout({
 }) {
   const session = await getServerAuthSession();
   const headersList = headers();
-  const pathname = headersList.get("x-pathname");
+  const pathname = headersList.get("x-pathname")!;
 
   const unprotectedRoutes = ["/"];
   // redirect user to sign in page if they try to go to any other path without being signed in
   // thus we don't have to add a check to every route
-  if (!unprotectedRoutes.find((val) => val === pathname) && !session) {
+  if (!unprotectedRoutes.includes(pathname) && !session) {
     permanentRedirect("/");
   }
 
@@ -49,6 +49,15 @@ export default async function RootLayout({
   ) {
     // student should upload avatar
     permanentRedirect(updateAvatarPath);
+  }
+
+  // role based access
+  if (session) {
+  const studentDisallowed = ["/grading"];
+  const professorDisallowed = ["/finance", "/academics"];
+
+  if (session.user.role === Role.STUDENT && studentDisallowed.includes(pathname)) permanentRedirect("/");
+  else if (session.user.role === Role.PROFESSOR && professorDisallowed.includes(pathname)) permanentRedirect("/");
   }
 
   return (

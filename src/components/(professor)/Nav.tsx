@@ -4,28 +4,19 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuLink,
-  navigationMenuTriggerStyle,
 } from "~/components/ui/NavigationMenu";
-import Link from "next/link";
+
+import ActiveLink from "../(shared)/ActiveLink";
 
 const ProfNav = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Home
-            </NavigationMenuLink>
-          </Link>
+          <ActiveLink href="/">Home</ActiveLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/grading" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Grading
-            </NavigationMenuLink>
-          </Link>
+          <ActiveLink href="/grading">Grading</ActiveLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

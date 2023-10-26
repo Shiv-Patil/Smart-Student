@@ -18,11 +18,15 @@ export const paymentRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const feeDetails = await ctx.db.fee.findFirst({
-      where: {
-        id: input.feeId
-      }
-    });
-      if (!feeDetails) throw new TRPCError({code: "BAD_REQUEST", message: "Fee details not found in database"});
+        where: {
+          id: input.feeId,
+        },
+      });
+      if (!feeDetails)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Fee details not found in database",
+        });
       const amountInPaise = feeDetails.amount * 100;
       return stripe.checkout.sessions.create({
         mode: "payment",
@@ -33,12 +37,17 @@ export const paymentRouter = createTRPCRouter({
               currency: "inr",
               unit_amount: Number(amountInPaise.toFixed(0)),
               product_data: {
-                name: feeDetails.for
+                name: feeDetails.for,
               },
             },
             quantity: 1,
           },
         ],
+        payment_intent_data: {
+          metadata: {
+            feeId: input.feeId,
+          },
+        },
         success_url: `${ctx.headers.get(
           "origin",
         )}/finance/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -46,10 +55,21 @@ export const paymentRouter = createTRPCRouter({
       });
     }),
 
-  getStripeSession: protectedProcedure
+  getStripeCharge: protectedProcedure
     .input(z.object({ sessionId: z.string().min(1) }))
     .query(async ({ input }) => {
-      return await stripe.checkout.sessions.retrieve(input.sessionId);
+      const session = await stripe.checkout.sessions.retrieve(input.sessionId);
+      if (!session) return null;
+      const intent =
+        typeof session.payment_intent === "string" ||
+        session.payment_intent instanceof String
+          ? await stripe.paymentIntents.retrieve(`${session.payment_intent}`)
+          : session.payment_intent;
+      if (!intent) return null;
+      return typeof intent.latest_charge === "string" ||
+        intent.latest_charge instanceof String
+        ? await stripe.charges.retrieve(`${intent.latest_charge}`)
+        : intent.latest_charge;
     }),
 
   getAllFees: protectedProcedure.query(async ({ ctx }) => {
@@ -59,4 +79,16 @@ export const paymentRouter = createTRPCRouter({
       },
     });
   }),
+
+  getReceipt: protectedProcedure
+    .input(z.object({ feeId: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      return (
+        await ctx.db.fee.findFirst({
+          where: {
+            id: input.feeId,
+          },
+        })
+      )?.receiptURL;
+    }),
 });

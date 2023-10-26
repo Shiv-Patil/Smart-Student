@@ -78,7 +78,6 @@ export const authOptions: NextAuthOptions = {
                   {
                     for: "Sem I",
                     amount: 255000,
-                    paid: true
                   },
                   {
                     for: "Sem II",

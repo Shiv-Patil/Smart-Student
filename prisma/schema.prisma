@@ -54,12 +54,13 @@ enum Role {
 }
 
 model Fee {
-  id        String  @id @default(cuid())
-  studentId String
-  for       String
-  amount    Int // in INR
-  paid      Boolean @default(false)
-  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  id         String  @id @default(cuid())
+  studentId  String
+  for        String
+  amount     Int // in INR
+  paid       Boolean @default(false)
+  receiptURL String?
+  student    Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@index([studentId])
 }

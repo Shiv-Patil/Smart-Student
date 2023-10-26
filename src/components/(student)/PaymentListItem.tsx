@@ -24,9 +24,14 @@ const PaymentListItem: FC<PaymentListItemProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const createCheckout = api.payment.createCheckout.useMutation();
+  const getReceipt = api.payment.getReceipt.useQuery({
+    feeId: paymentInfo.feeId,
+  });
 
-  const downloadReceipt = () => {
+  const openReceipt = () => {
     setIsLoading(true);
+    if (getReceipt.data) window.open(getReceipt.data, "_blank");
+    else toast({ title: "Info", description: "No receipt saved" });
     setIsLoading(false);
   };
 
@@ -46,7 +51,11 @@ const PaymentListItem: FC<PaymentListItemProps> = ({
     } catch (e) {
       const err = e as TRPCError;
       console.error(err);
-      toast({title: "Error", description: "There was a problem processing your request", variant: "destructive"})
+      toast({
+        title: "Error",
+        description: "There was a problem processing your request",
+        variant: "destructive",
+      });
     }
     setIsLoading(false);
   };
@@ -55,18 +64,25 @@ const PaymentListItem: FC<PaymentListItemProps> = ({
     <>
       <div className="flex items-center gap-4" {...props}>
         <div className="flex flex-[2] items-center">{paymentInfo.for}</div>
-        <div className="flex flex-1 items-center">₹{paymentInfo.amount}</div>
-        <div className="flex flex-1 items-center">
-          {paymentInfo.paid ? <span className="">PAID</span> : null}
+        <div className="flex flex-1 items-center justify-end">
+          {paymentInfo.amount.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+            style: "currency",
+            currency: "INR",
+          })}
         </div>
-        <div className="flex flex-1 items-center">
+        <div className="flex flex-1 items-center justify-center text-secondary-foreground">
+          {paymentInfo.paid ? "Paid" : "Due"}
+        </div>
+        <div className="flex flex-[.5] items-center justify-end">
           {paymentInfo.paid ? (
             <Button
               variant="outline"
               isLoading={isLoading}
-              onClick={downloadReceipt}
+              onClick={openReceipt}
             >
-              Invoice
+              Receipt
             </Button>
           ) : (
             <Button isLoading={isLoading} onClick={payFee}>

@@ -35,6 +35,13 @@ const Auth = () => {
         description: "Sign in link sent to your email id.",
       });
       router.replace("/");
+    } else if (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem signing you in",
+        variant: "destructive",
+      });
+      router.replace("/");
     }
   }, [params]);
 

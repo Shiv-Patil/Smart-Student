@@ -2,16 +2,12 @@
 
 import { Button } from "~/components/ui/Button";
 import { Download } from "lucide-react";
-import { useState } from "react";
-import Stripe from "stripe";
+import { toast } from "~/hooks/use-toast";
 
-const PaymentSuccess = ({invoice}: {invoice: string | Stripe.Invoice | null}) => {
-  const [isLoading, setIsLoading] = useState(false);
-
+const PaymentSuccess = ({receipt}: {receipt: string | null}) => {
   const downloadReceipt = async () => {
-    setIsLoading(true);
-    console.log(invoice);
-    setIsLoading(false);
+    if (receipt) window.open(receipt, "_blank");
+    else toast({title: "Error", description: "Unable to access the receipt", variant: "destructive"})
   };
 
   return (
@@ -21,10 +17,9 @@ const PaymentSuccess = ({invoice}: {invoice: string | Stripe.Invoice | null}) =>
         size="lg"
         className="w-full"
         onClick={downloadReceipt}
-        isLoading={isLoading}
       >
-        {isLoading ? null : <Download className="mr-2 h-4 w-4" />}
-        Download receipt
+        <Download className="mr-2 h-4 w-4" />
+        View receipt
       </Button>
     </div>
   );

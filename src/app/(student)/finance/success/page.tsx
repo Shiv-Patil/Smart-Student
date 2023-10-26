@@ -11,27 +11,26 @@ const Success = async ({
   const stripeSessionId = searchParams["session_id"];
   if (!stripeSessionId || !stripeSessionId.length)
     permanentRedirect(redirectTo);
-  let invoice = null;
+  let receipt = null;
   try {
-    const stripeSession = await api.payment.getStripeSession.query({
-      sessionId:
+    const stripeCharge = await api.payment.getStripeCharge.query({
+        sessionId: 
         (Array.isArray(stripeSessionId)
           ? stripeSessionId[0]
-          : stripeSessionId) || "",
-    });
+          : stripeSessionId) || ""
+      });
     if (
-      !stripeSession ||
-      stripeSession.status !== "complete" ||
-      stripeSession.payment_status !== "paid"
+      !stripeCharge ||
+      !stripeCharge.paid
     )
       permanentRedirect(redirectTo);
-    invoice = stripeSession.invoice;
+      receipt = stripeCharge.receipt_url;
   } catch (err) {
     console.error(err);
     permanentRedirect(redirectTo);
   }
 
-  return <PaymentSuccess invoice={invoice} />;
+  return <PaymentSuccess receipt={receipt} />;
 };
 
 export default Success;

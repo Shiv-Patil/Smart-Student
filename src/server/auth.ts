@@ -44,11 +44,9 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider === "google") {
         // student login (account)
         user.role = Role.STUDENT;
-        const student = await db.student.findFirst({
+        const student = user.studentId ? await db.student.findFirst({
           where: {id: user.studentId}
-        });
-        console.warn(user.studentId, student);
-
+        }) : null;
         if (!student) {
           user.image = "";
 

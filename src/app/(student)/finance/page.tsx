@@ -1,4 +1,5 @@
 import PaymentListItem from "~/components/(student)/PaymentListItem";
+import { Badge } from "~/components/ui/Badge";
 import {
   Card,
   CardContent,
@@ -21,11 +22,17 @@ const Finance = async () => {
           <CardDescription>Payments</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex w-full flex-col gap-2 py-4">
-            <div className="flex items-center gap-4 py-4 text-xs text-secondary-foreground">
-              <div className="flex flex-[2] items-center">Payment</div>
-              <div className="flex flex-1 items-center justify-end">Amount</div>
-              <div className="flex flex-1 items-center justify-center">Status</div>
+          <div className="flex w-full flex-col gap-2">
+            <div className="flex items-center gap-4 pb-2 text-secondary-foreground">
+              <div className="flex flex-[2] items-center">
+                <Badge variant="outline">Payment</Badge>
+              </div>
+              <div className="flex flex-1 items-center justify-end">
+                <Badge variant="outline">Amount</Badge>
+              </div>
+              <div className="flex flex-1 items-center justify-center">
+                <Badge variant="outline">Status</Badge>
+              </div>
               <div className="flex flex-[.5]" />
             </div>
             <Separator />
@@ -43,7 +50,7 @@ const Finance = async () => {
           </div>
         </CardContent>
         <CardFooter className="text-xs text-secondary-foreground">
-          Payments powered by &#8203; 
+          Payments powered by &#8203;
           <a href="https://stripe.com/" className="hover:underline">
             Stripe
           </a>

@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/Form";
-import { useToast } from "~/hooks/use-toast";
+import { toast } from "~/hooks/use-toast";
 import { Input } from "~/components/ui/Input";
 
 const FormSchema = z.object({
@@ -27,8 +27,6 @@ const FormSchema = z.object({
 
 const ProfAuth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { toast } = useToast();
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

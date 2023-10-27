@@ -11,12 +11,11 @@ import ProfAuth from "./ProfAuth";
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Icons } from "~/components/Icons";
-import { useToast } from "~/hooks/use-toast";
+import { toast } from "~/hooks/use-toast";
 import { useSearchParams, useRouter } from "next/navigation";
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { toast } = useToast();
   const params = useSearchParams();
   const router = useRouter();
 

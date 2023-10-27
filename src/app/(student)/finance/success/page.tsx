@@ -1,4 +1,4 @@
-import { permanentRedirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import PaymentSuccess from "~/components/(student)/PaymentSuccess";
 import { api } from "~/trpc/server";
 
@@ -10,7 +10,7 @@ const Success = async ({
   const redirectTo = "/finance";
   const stripeSessionId = searchParams["session_id"];
   if (!stripeSessionId || !stripeSessionId.length)
-    permanentRedirect(redirectTo);
+    redirect(redirectTo);
   let receipt = null;
   try {
     const stripeCharge = await api.payment.getStripeCharge.query({
@@ -23,11 +23,11 @@ const Success = async ({
       !stripeCharge ||
       !stripeCharge.paid
     )
-      permanentRedirect(redirectTo);
+      redirect(redirectTo);
       receipt = stripeCharge.receipt_url;
   } catch (err) {
     console.error(err);
-    permanentRedirect(redirectTo);
+    redirect(redirectTo);
   }
 
   return <PaymentSuccess receipt={receipt} />;

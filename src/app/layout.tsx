@@ -7,7 +7,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/Toaster";
 
 import { getServerAuthSession } from "~/server/auth";
-import { permanentRedirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import Navbar from "~/components/(shared)/Navbar";
 import { Role } from "@prisma/client";
@@ -37,7 +37,7 @@ export default async function RootLayout({
   // redirect user to sign in page if they try to go to any other path without being signed in
   // thus we don't have to add a check to every route
   if (!unprotectedRoutes.includes(pathname) && !session) {
-    permanentRedirect("/");
+    redirect("/");
   }
 
   const updateAvatarPath = "/profile";
@@ -48,7 +48,7 @@ export default async function RootLayout({
     pathname !== updateAvatarPath
   ) {
     // student should upload avatar
-    permanentRedirect(updateAvatarPath);
+    redirect(updateAvatarPath);
   }
 
   // role based access
@@ -56,8 +56,8 @@ export default async function RootLayout({
   const studentDisallowed = ["/grading"];
   const professorDisallowed = ["/finance", "/academics"];
 
-  if (session.user.role === Role.STUDENT && studentDisallowed.includes(pathname)) permanentRedirect("/");
-  else if (session.user.role === Role.PROFESSOR && professorDisallowed.includes(pathname)) permanentRedirect("/");
+  if (session.user.role === Role.STUDENT && studentDisallowed.includes(pathname)) redirect("/");
+  else if (session.user.role === Role.PROFESSOR && professorDisallowed.includes(pathname)) redirect("/");
   }
 
   return (

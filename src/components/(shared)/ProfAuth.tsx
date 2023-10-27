@@ -59,7 +59,7 @@ const ProfAuth = () => {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="w-full">
+            <FormItem className="w-full px-1">
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder="example@xyz.com" {...field} />

@@ -85,7 +85,6 @@ export const columns: ColumnDef<Grade>[] = [
             Email
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-          <span className="ml-2">{column.getIsSorted()}</span>
         </>
       );
     },

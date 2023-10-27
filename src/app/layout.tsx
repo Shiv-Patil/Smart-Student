@@ -53,11 +53,19 @@ export default async function RootLayout({
 
   // role based access
   if (session) {
-  const studentDisallowed = ["/grading"];
-  const professorDisallowed = ["/finance", "/academics"];
+    const studentDisallowed = ["/grading"];
+    const professorDisallowed = ["/finance", "/academics"];
 
-  if (session.user.role === Role.STUDENT && studentDisallowed.includes(pathname)) redirect("/");
-  else if (session.user.role === Role.PROFESSOR && professorDisallowed.includes(pathname)) redirect("/");
+    if (
+      session.user.role === Role.STUDENT &&
+      studentDisallowed.includes(pathname)
+    )
+      redirect("/");
+    else if (
+      session.user.role === Role.PROFESSOR &&
+      professorDisallowed.includes(pathname)
+    )
+      redirect("/");
   }
 
   return (

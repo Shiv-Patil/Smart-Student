@@ -9,22 +9,17 @@ const Success = async ({
 }) => {
   const redirectTo = "/finance";
   const stripeSessionId = searchParams["session_id"];
-  if (!stripeSessionId || !stripeSessionId.length)
-    redirect(redirectTo);
+  if (!stripeSessionId || !stripeSessionId.length) redirect(redirectTo);
   let receipt = null;
   try {
     const stripeCharge = await api.payment.getStripeCharge.query({
-        sessionId: 
+      sessionId:
         (Array.isArray(stripeSessionId)
           ? stripeSessionId[0]
-          : stripeSessionId) || ""
-      });
-    if (
-      !stripeCharge ||
-      !stripeCharge.paid
-    )
-      redirect(redirectTo);
-      receipt = stripeCharge.receipt_url;
+          : stripeSessionId) || "",
+    });
+    if (!stripeCharge || !stripeCharge.paid) redirect(redirectTo);
+    receipt = stripeCharge.receipt_url;
   } catch (err) {
     console.error(err);
     redirect(redirectTo);
@@ -34,4 +29,3 @@ const Success = async ({
 };
 
 export default Success;
-

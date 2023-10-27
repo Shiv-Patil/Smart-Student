@@ -2,8 +2,9 @@ import { Role } from "@prisma/client";
 import { User2 } from "lucide-react";
 import EditAvatar from "~/components/(shared)/EditAvatar";
 import LogoutBtn from "~/components/(shared)/LogoutBtn";
+import RoleBadge from "~/components/(shared)/RoleBadge";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/Avatar";
-import { Badge } from "~/components/ui/Badge";
+
 import {
   Card,
   CardContent,
@@ -40,9 +41,7 @@ const Profile = async () => {
               <p className="text-sm text-secondary-foreground">
                 {session?.user.email}
               </p>
-              <Badge className="mt-1">
-                {session?.user.role.toLowerCase()}@bits
-              </Badge>
+              <RoleBadge role={session?.user.role.toLowerCase() || "unknown"} />
             </div>
           </div>
         </CardContent>

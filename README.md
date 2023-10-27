@@ -1,28 +1,81 @@
-# Create T3 App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+# Smart Student
 
-## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+This is a web project I made in a short span of time for a college club induction task.  
+It is a college web portal for students where they can view their academic progress and finances.  
+When logged in as a student, there are 2 pages - academics and finance. Students can view their grades, overall cgpa and make payments. (Note: all of this is test data and mock payments.)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
+There is also a professor sign-in, in which professors can assign grades to students.
+Complete with a profile page where the user has the abiility to upload custom avatar.
+
+
+## Tech Stack
+
+The T3 Stack  
 - [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [TypeScript](https://typescriptlang.org)
+- [Prisma](https://prisma.io)
+- [NextAuth.js](https://next-auth.js.org)
 
-## Learn More
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Run Locally
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Clone the project
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+```bash
+git clone https://github.com/Shiv-Patil/Smart-Student/
+```
 
-## How do I deploy this?
+Go to the project directory
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+cd Smart-Student
+```
+
+Install dependencies
+
+```bash
+bun install
+```
+
+Start the server
+
+```bash
+bun run dev
+```
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`DATABASE_URL`  
+`NEXTAUTH_URL`  
+`NEXTAUTH_SECRET`  
+`GOOGLE_CLIENT_ID`  
+`GOOGLE_CLIENT_SECRET`  
+`UPLOADTHING_SECRET`  
+`UPLOADTHING_APP_ID`  
+`EMAIL_SERVER_HOST`  
+`EMAIL_SERVER_PORT`  
+`EMAIL_SERVER_USER`  
+`EMAIL_SERVER_PASSWORD`  
+`EMAIL_FROM`  
+`NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`  
+`STRIPE_SECRET_KEY`  
+`STRIPE_WEBHOOK_SECRET`
+
+
+## Demo
+
+Live demo is available at https://smart-student.vercel.app
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+

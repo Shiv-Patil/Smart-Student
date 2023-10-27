@@ -17,11 +17,13 @@ import { Badge } from "../ui/Badge";
 
 const CarouselItem = ({
   className,
+  courseId,
   courseName,
   courseCredits,
   courseGrade,
 }: {
   className: string;
+  courseId: string;
   courseName: string;
   courseCredits: number;
   courseGrade: string;
@@ -30,7 +32,7 @@ const CarouselItem = ({
     <Card className={className}>
       <CardHeader>
         <CardTitle>{courseName}</CardTitle>
-        <CardDescription>{courseCredits} credits</CardDescription>
+        <CardDescription>{courseId}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center text-3xl gap-2">
         
@@ -41,6 +43,7 @@ const CarouselItem = ({
         )}
         <Badge variant="outline">grade</Badge>
       </CardContent>
+      <CardFooter className="flex py-0">{courseCredits} credit{courseCredits > 1 ? "s" : ""}</CardFooter>
     </Card>
   );
 };
@@ -87,9 +90,10 @@ const Carousel = ({ width, courses }: { width: string; courses: Course[] }) => {
         className="relative flex w-full touch-pan-x snap-x snap-mandatory overflow-hidden scroll-smooth"
         ref={carousal}
       >
-        {courses.map((ele, index) => (
+        {courses.map((ele) => (
           <CarouselItem
             className={width}
+            courseId={ele.code}
             courseName={ele.name}
             courseCredits={ele.credits}
             courseGrade={ele.grade || ""}

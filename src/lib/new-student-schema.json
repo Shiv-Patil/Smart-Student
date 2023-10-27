@@ -1,0 +1,64 @@
+{
+  "data": {
+    "courses": {
+      "create": [
+        {
+          "code": "MATHF111",
+          "name": "Mathematics I",
+          "credits": 3
+        },
+        {
+          "code": "PHYF111",
+          "name": "Mechanics, Oscillations and Waves",
+          "credits": 3
+        },
+        {
+          "code": "CHEMF111",
+          "name": "General Chemistry",
+          "credits": 3
+        },
+        {
+          "code": "CSF111",
+          "name": "Computer Programming",
+          "credits": 4
+        },
+        {
+          "code": "PHYF110",
+          "name": "Physics Laboratory",
+          "credits": 1
+        },
+        {
+          "code": "CHEMF111",
+          "name": "Chemistry Laboratory",
+          "credits": 1
+        },
+        {
+          "code": "MEF110",
+          "name": "Workshop Practice",
+          "credits": 2
+        },
+        {
+          "code": "EEEF111",
+          "name": "Electrical Sciences",
+          "credits": 3
+        }
+      ]
+    },
+    "fees": {
+      "create": [
+        {
+          "for": "Sem I",
+          "amount": 255000
+        },
+        {
+          "for": "Sem II",
+          "amount": 255000
+        },
+        {
+          "for": "Hostel, mess, and other advances",
+          "amount": 53000
+        }
+      ]
+    }
+  }
+}

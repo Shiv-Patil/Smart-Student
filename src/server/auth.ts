@@ -11,6 +11,7 @@ import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 
 import { Role } from "@prisma/client";
+import newStudentSchema from "~/lib/new-student-schema.json";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -51,46 +52,7 @@ export const authOptions: NextAuthOptions = {
           user.role = Role.STUDENT;
           user.image = "";
 
-          const createdStudent = await db.student.create({
-            data: {
-              courses: {
-                create: [
-                  {
-                    name: "MATHF111",
-                    credits: 3,
-                  },
-                  {
-                    name: "PHYF111",
-                    credits: 3,
-                  },
-                  {
-                    name: "CHEMF111",
-                    credits: 3,
-                  },
-                  {
-                    name: "CSF111",
-                    credits: 4
-                  }
-                ]
-              },
-              fees: {
-                create: [
-                  {
-                    for: "Sem I",
-                    amount: 255000,
-                  },
-                  {
-                    for: "Sem II",
-                    amount: 255000,
-                  },
-                  {
-                    for: "Hostel, mess, and other advances",
-                    amount: 53000,
-                  }
-                ]
-              }
-            }
-          });
+          const createdStudent = await db.student.create(newStudentSchema);
           console.warn(createdStudent.id);
           user.studentId = createdStudent.id;
         }

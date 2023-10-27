@@ -26,7 +26,7 @@ const Navbar = async () => {
       <div className="flex flex-1 items-center justify-end">
         {session ? (
           <Link href="/profile">
-            <Avatar className="border border-input">
+            <Avatar className="border-2 border-muted">
               <AvatarImage src={session.user.image || ""} />
               <AvatarFallback>
                 <User2 className="h-4 w-4" />

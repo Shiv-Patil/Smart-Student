@@ -43,13 +43,13 @@ export const authOptions: NextAuthOptions = {
     signIn: async ({ user, account }) => {
       if (account?.provider === "google") {
         // student login (account)
+        user.role = Role.STUDENT;
         const student = await db.student.findFirst({
           where: {id: user.studentId}
         });
         console.warn(user.studentId, student);
 
         if (!student) {
-          user.role = Role.STUDENT;
           user.image = "";
 
           const createdStudent = await db.student.create(newStudentSchema);

@@ -8,8 +8,16 @@ import {
   CardTitle,
 } from "~/components/ui/Card";
 import { db } from "~/server/db";
+import { getServerAuthSession } from "~/server/auth";
 
 async function getData(): Promise<Grade[]> {
+  const session = await getServerAuthSession();
+  const profCourses = (await db.professor.findFirst({
+    where: {
+      id: session!.user.professorId!,
+    },
+  }))!.forCourses.split(",");
+
   const students = await db.user.findMany({
     where: {
       role: "STUDENT",
@@ -34,8 +42,9 @@ async function getData(): Promise<Grade[]> {
       data.push({
         id: course.id,
         grade: course.grade,
-        courseId: course.code,
+        courseCode: course.code,
         courseName: course.name,
+        doesTeach: profCourses.includes(course.code),
         ...obj,
       });
     });

@@ -21,12 +21,20 @@ import { gradePoints } from "~/lib/utils";
 
 const Academics = async () => {
   const courses = await api.academics.getCourses.query();
-  if (!courses.length) return <div className="mt-24 items-center justify-center text-muted-foreground">No data to display</div>;
-  const totalCredits = courses.map((el) => el.credits).reduce((a, v) => a + v)
+  if (!courses.length)
+    return (
+      <div className="mt-24 items-center justify-center text-muted-foreground">
+        No data to display
+      </div>
+    );
+  const totalCredits = courses
+    .map((el) => (el.grade ? el.credits : 0))
+    .reduce((a, v) => a + v);
   const totalPoints = totalCredits * 10;
   const pointsReceived = courses
-        .map((el) => gradePoints(el.grade || "").valueOf())
-        .reduce((a, v) => a + v) * 10
+    .map((el) => gradePoints(el.grade || "").valueOf() * el.credits)
+    .reduce((a, v) => a + v);
+
   const cgpa = totalPoints
     ? ((pointsReceived / totalPoints) * 10).toFixed(2)
     : 0;

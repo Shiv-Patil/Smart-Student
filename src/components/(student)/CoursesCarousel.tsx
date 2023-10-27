@@ -34,7 +34,7 @@ const CarouselItem = ({
         <CardTitle>{courseName}</CardTitle>
         <CardDescription>{courseId}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col items-center justify-center text-3xl gap-2">
+      <CardContent className="flex flex-1 flex-col items-center justify-center text-3xl gap-2">
         
         {courseGrade.length ? (
           courseGrade
@@ -43,7 +43,7 @@ const CarouselItem = ({
         )}
         <Badge variant="outline">grade</Badge>
       </CardContent>
-      <CardFooter className="flex py-0">{courseCredits} credit{courseCredits > 1 ? "s" : ""}</CardFooter>
+      <CardFooter className="flex pb-4">{courseCredits} credit{courseCredits > 1 ? "s" : ""}</CardFooter>
     </Card>
   );
 };
@@ -92,7 +92,7 @@ const Carousel = ({ width, courses }: { width: string; courses: Course[] }) => {
       >
         {courses.map((ele) => (
           <CarouselItem
-            className={width}
+            className={width + " h-72 flex flex-col gap-2"}
             courseId={ele.code}
             courseName={ele.name}
             courseCredits={ele.credits}

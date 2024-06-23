@@ -27,7 +27,6 @@ export const POST = async (req: Request) => {
     switch (event.type) {
       case "payment_intent.succeeded":
         const paymentIntentSucceeded = event.data.object;
-        console.log(paymentIntentSucceeded);
         const feeId = paymentIntentSucceeded.metadata["feeId"];
         let receipt_url =
           (typeof paymentIntentSucceeded.latest_charge === "string" ||
@@ -64,4 +63,3 @@ export const POST = async (req: Request) => {
   }
   return NextResponse.json({ message: "Received" }, { status: 200 });
 };
-

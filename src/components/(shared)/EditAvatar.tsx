@@ -6,14 +6,12 @@ import { cn } from "~/lib/utils";
 
 import { useUploadThing } from "~/hooks/uploadthing";
 import { toast } from "~/hooks/use-toast";
-import { UploadFileResponse } from "uploadthing/client";
 
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 
 const EditAvatar = forwardRef(
   (props: { className: string }, ref: React.ForwardedRef<HTMLLabelElement>) => {
-    const [isUploading, setIsUploading] = useState(false);
     const router = useRouter();
     const updateAvatar = api.profile.updateAvatar.useMutation({
       onSuccess: () => {
@@ -26,13 +24,12 @@ const EditAvatar = forwardRef(
       },
     });
 
-    const { startUpload } = useUploadThing("profilePicture", {
-      onClientUploadComplete: (res: UploadFileResponse[] | undefined) => {
+    const { startUpload, isUploading } = useUploadThing("profilePicture", {
+      onClientUploadComplete: (res) => {
         const file = res ? res[0] : undefined;
         if (file) {
           updateAvatar.mutate({ image: file.url });
         }
-        setIsUploading(false);
       },
       onUploadError: (e) => {
         toast({
@@ -40,19 +37,20 @@ const EditAvatar = forwardRef(
           description: e.message,
           variant: "destructive",
         });
-        setIsUploading(false);
         console.error(e);
       },
-      onUploadBegin: () => {
-        setIsUploading(true);
-      },
+      onUploadBegin: () => {},
     });
 
     const fileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (!e.target.files || !e.target.files.length || !e.target.files[0])
         return;
-      setIsUploading(true);
       const file = e.target.files[0];
+      if (file.size > 1024288)
+        return toast({
+          title: "Alert",
+          description: "Max file upload size is 1MB.",
+        });
       startUpload([file]);
     };
 
@@ -72,7 +70,7 @@ const EditAvatar = forwardRef(
           className={cn(
             "flex cursor-pointer items-center justify-center",
             props.className,
-            isUploading ? "opacity-50 cursor-default" : "",
+            isUploading ? "cursor-default opacity-50" : "",
           )}
         >
           {isUploading ? (

@@ -4,21 +4,22 @@ const f = createUploadthing();
 
 import { getServerAuthSession } from "~/server/auth";
 
-export const fileRouter = {
-  profilePicture: f({ image: { maxFileSize: "1MB" } })
-    .middleware(async () => {
-      const session = await getServerAuthSession();
-      if (!session) throw new Error("Unauthorized");
+const middleware = async () => {
+  const session = await getServerAuthSession();
+  if (!session) throw new Error("Unauthorized");
+  return { userId: session.user.id };
+};
 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: session.user.id };
-    })
+export const uploadthingRouter = {
+  profilePicture: f({
+    image: { maxFileSize: "512KB", maxFileCount: 1 },
+  })
+    .middleware(middleware)
     .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
-      console.log("Upload complete for userId:", metadata.userId);
-
-      console.log("file url", file.url);
+      return {
+        uploadedBy: metadata.userId,
+      };
     }),
 } satisfies FileRouter;
 
-export type fileRouter = typeof fileRouter;
+export type UploadthingRouter = typeof uploadthingRouter;

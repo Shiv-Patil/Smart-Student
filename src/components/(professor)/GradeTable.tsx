@@ -35,7 +35,6 @@ import {
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 import { toast } from "~/hooks/use-toast";
-import { Grade } from "./GradeTableColumns";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
